@@ -1,18 +1,6 @@
 version: '3.3'
 services:
 
-  database:
-    image: "postgres"
-    container_name: "primaprova_postgres"
-    hostname: "primaprova_postgres"
-    env_file:
-      - ./env/database.env
-    volumes:
-      - postgres:/var/lib/postgresql/data/
-    ports:
-      - 5432:5432
-    restart: unless-stopped
-
   pgadmin:
     image: dpage/pgadmin4
     volumes:
@@ -21,16 +9,12 @@ services:
       - 5050:80
     env_file:
       - ./env/pgadmin.env
-    depends_on:
-      - database
     restart: unless-stopped
 
   backend:
     build: ./backend/
     ports:
       - 80:80
-    depends_on:
-      - database
 
 volumes:
   postgres:
